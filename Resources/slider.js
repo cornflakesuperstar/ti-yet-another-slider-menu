@@ -33,6 +33,18 @@ exports.createSlider = function() {
 	});
 	slider.add(shadow);
 
+  // Re-render layout when orientation changes
+  Ti.Gesture.addEventListener('orientationchange', function(e){
+    if(visibleWindow !== null){
+      visibleWindow.width = Ti.Platform.displayCaps.platformWidth;
+      var open_windows = visibleWindow.windows();
+      for(var i in open_windows){
+        open_windows[i].width = Ti.Platform.displayCaps.platformWidth;
+      }
+    }
+  });
+
+
 	function showTopCatcher() {
 		if (tapCatcher != null) {
 			// don't load again if showing

@@ -12,7 +12,10 @@ exports.createNavigationWindow = function(baseWindow) {
 		var me = Ti.UI.createWindow({
 			backgroundColor : 'black'
 		});
-		me.orientationModes = [Ti.UI.PORTRAIT];
+		
+    if (Ti.Platform.osname != 'ipad') {
+      me.orientationModes = [Ti.UI.PORTRAIT];
+    }
 		me.nav = Ti.UI.iPhone.createNavigationGroup({
 			window : baseWindow
 		});
@@ -59,6 +62,10 @@ exports.createNavigationWindow = function(baseWindow) {
 	me.windowCount = function() {
 		return windows.length;
 	};
+	
+	me.windows = function(){
+	  return windows;
+	}
 
 	return me;
 };
