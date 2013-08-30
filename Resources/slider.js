@@ -35,11 +35,23 @@ exports.createSlider = function() {
 
   // Re-render layout when orientation changes
   Ti.Gesture.addEventListener('orientationchange', function(e){
-    if(visibleWindow !== null){
-      visibleWindow.width = Ti.Platform.displayCaps.platformWidth;
-      var open_windows = visibleWindow.windows();
-      for(var i in open_windows){
-        open_windows[i].width = Ti.Platform.displayCaps.platformWidth;
+    if(Ti.Platform.osname == 'ipad' && visibleWindow !== null){
+      var platform_width = Ti.Platform.displayCaps.platformWidth;
+      
+      // Loop through each window in the menu
+      for(var i in windows) {
+
+        // If the window has been loaded in memory
+        var top_level_win = windows[i].window;
+        if (top_level_win !== null) {
+          top_level_win.width = platform_width;
+          
+          // Loop through each sub-nav window in the stack
+          var open_windows = top_level_win.windows();
+          for(var j in open_windows){
+            open_windows[j].width = platform_width;
+          }
+        }
       }
     }
   });
